@@ -4,7 +4,7 @@ const ErrorHandler = require("../utils/errorHandler");
 //const errorHandler= require('../utils/errorHandler');
 
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
-const APIFeatures = require("../utils/APIFeatures");
+const APIFeatures = require("../utils/apiFeatures");
 
 const cloudinary = require("cloudinary");
 
