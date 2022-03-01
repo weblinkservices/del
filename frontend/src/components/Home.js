@@ -11,8 +11,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert';
 import { getProducts } from "../actions/productActions";
 
+
+import { Carousel } from 'react-bootstrap'
+import RelatedItem from "./product/RelatedItem";
+import Slider1 from "react-slick";
+import Checkbox from '@mui/material/Checkbox';
 const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range)
+
 const Home = ({ match }) => {
   const [currentPage, setcurrentPage] = useState(1)
   const [discountPrice, setDiscountPrice] = useState([1, 1000000])
@@ -37,6 +43,7 @@ const Home = ({ match }) => {
   const dispatch = useDispatch();
   const { loading, products, error, productsCount, resPerPage, filteredProductsCount } = useSelector(state => state.products)
   const keyword = match.params.keyword
+  console.log("products",products)
   useEffect(() => {
     if (error) {
       return alert.error(error)
@@ -53,12 +60,90 @@ const Home = ({ match }) => {
   if (keyword) {
     count = filteredProductsCount
   }
+
+  let settings = {
+    infinite: false,
+    speed: 1000,
+    arrows: true,
+    slidesToShow: 5,
+    slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 960,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 2,
+        },
+      },
+    ],
+  };
+
+  const products1 = {
+    images: [{
+      "public_id": 1,
+      "url": "https://picsum.photos/1400/300",
+      "title": "abc"
+    },
+
+    {
+      "public_id": 2,
+      "url": "https://picsum.photos/1400/300",
+      "title": "abc"
+    },
+
+    {
+      "public_id": 3,
+      "url": "https://picsum.photos/1400/300",
+      "title": "abc"
+    }
+
+    ]
+  }
+
+
   return (
     <Fragment>
       {loading ? <Loader /> : (
         <Fragment>
           <MetaData title={'Buy Best Products Online'} />
-          <h1 id="products_heading">Latest Products</h1>
+
+          {keyword ? ("") : (
+            <div>
+              <div className="row f-flex justify-content-around">
+                <div className="img-fluid">
+                  <Carousel pause="hover">
+                    {products1.images && products1.images.map(image => (
+                      <Carousel.Item key={image.public_id}>
+                        <img className="d-block w-100" src={image.url} alt={products1.title} />
+                      </Carousel.Item>
+                    ))}
+                  </Carousel>
+                </div>
+              </div>
+              <div className="row slider-bg">
+                <div className="container-fluid mt-3 mb-3"  >
+                  <Slider1 {...settings}>
+                    {products &&
+                      products.map((product) => (
+                        <RelatedItem key={product._id} product={product} />
+                      ))}
+                  </Slider1>
+                </div>
+              </div>
+            </div>
+          )}
+
+
+          {keyword ? <h1 id="products_heading" className="serach-result">1-{filteredProductsCount} of over {productsCount} results for <span style={{ color: "#cc3f06" }}>"{keyword}"</span> </h1>
+            : <h1 id="products_heading">Latest Products</h1>}
+
           <section id="products" className="container-fluid mt-5 mt-5">
             <div className="row">
               {keyword ? (
@@ -88,15 +173,13 @@ const Home = ({ match }) => {
                         </h4>
                         <ul className="pl-0">
                           {categories.map(category => (
-                            <li
-                              style={{
-                                cursor: 'pointer',
-                                listStyleType: 'none'
-                              }}
-                              key={category}
-                              onClick={() => setCategory(category)
-                              }
-                            >
+                            <li style={{
+                              cursor: 'pointer',
+                              listStyleType: 'none'
+                            }}>
+                              <Checkbox
+                                key={category}
+                                onChange={() => setCategory(category)} />
                               {category}
                             </li>
                           ))}

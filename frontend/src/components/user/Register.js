@@ -46,7 +46,13 @@ const Register = ({ history }) => {
         formData.set('password', password);
         formData.set('avatar', avatar);
 
-        dispatch(register(formData))
+        var object = {};
+        formData.forEach((value, key) => object[key] = value);
+        var json = object
+        console.log(json)
+
+        // dispatch(register(formData))
+        dispatch(register(json))
     }
 
     const onChange = e => {

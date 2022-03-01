@@ -5,6 +5,7 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './components/Home';
 import ProductDetails from './components/product/ProductDetails'
+import Nav from "./components/layout/Nav"
 
 //Cart Imports
 import Cart from './components/cart/Cart';
@@ -57,9 +58,12 @@ function App() {
   const { user, isAuthenticated, loading } = useSelector(state => state.auth)
   return (
     <Router>
-    <div className="App">
+    <div className='App'>
      <Header/>
-     <div className="container-fluid">
+     {!loading && (!isAuthenticated || user.role !== 'admin') && (
+          <Nav />
+        )}
+     <div className="">
      <Route path="/" component={Home} exact />
      <Route path="/search/:keyword" component={Home} />
      <Route path="/product/:id" component={ProductDetails} exact />
@@ -68,14 +72,15 @@ function App() {
      <ProtectedRoute path="/shipping" component={Shipping} />
      <ProtectedRoute path="/confirm" component={ConfirmOrder} exact />
      <ProtectedRoute path="/success" component={OrderSuccess} />
-
-     <Route path="/login" component={Login} />
+    
+     <Route path="/login"  component={Login} />
      <Route path="/register" component={Register} />
      <Route path="/password/forgot" component={ForgotPassword} />
      <Route path="/password/reset/:token" component={NewPassword} />
      <ProtectedRoute path="/me" component={Profile} exact/>
      <ProtectedRoute path="/me/update" component={UpdateProfile} exact/>
      <ProtectedRoute path="/password/update" component={UpdatePassword} exact/>
+    
 
      <ProtectedRoute path="/orders/me" component={ListOrders} exact/>
      <ProtectedRoute path="/order/:id" component={OrderDetails} exact/>

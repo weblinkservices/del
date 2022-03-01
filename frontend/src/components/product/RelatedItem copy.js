@@ -68,7 +68,11 @@ const RelatedItem = ({ product }) => {
           {productsRelated &&
             productsRelated.map((product) => (
               <div className="col-sm-12 col-md-6 col-lg-3 my-3">
-                <div className="card rounded border border-light">
+                <div className="card rounded border`
+                
+          
+                ` border-light">
+                  
                   <div className="text-center">
                     <div className="card-related" key={product._id}>
                       <Link to={`/product/${product._id}`}>

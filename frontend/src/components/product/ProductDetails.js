@@ -161,6 +161,7 @@ const ProductDetails = ({ match }) => {
         <Fragment>
           <MetaData title={product.name} />
           <div className="container-fluid">
+          <div className="container-fluid">
             <div className="row d-flex justify-content-around">
               <div className="col-12 col-lg-5 img-fluid" id="product_image">
                 <Carousel pause="hover" interval={null}>
@@ -386,6 +387,7 @@ const ProductDetails = ({ match }) => {
                   </div>
                 </div>
               </div>
+            </div>
             </div>
             {product.reviews && product.reviews.length > 0 && (
               <ListReviews reviews={product.reviews} />

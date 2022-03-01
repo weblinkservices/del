@@ -48,7 +48,13 @@ const UpdateProfile = ({ history }) => {
         formData.set('email', email);
         formData.set('avatar', avatar);
 
-        dispatch(updateProfile(formData))
+        var object = {};
+        formData.forEach((value, key) => object[key] = value);
+        var json = object
+console.log(json)
+
+        // dispatch(updateProfile(formData))
+        dispatch(updateProfile(json))
     }
 
     const onChange = e => {
